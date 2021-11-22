@@ -37,6 +37,21 @@ public class SwaggerConfig {
                 .securityContexts(Arrays.asList(securityContext()));
     }
 
+    private Predicate<String> mainPath() {
+
+        return or(
+                regex("/authenticate.*"),
+                regex("/file-handle.*"),
+                regex("/admin.*"),
+                regex("/performance-materiality.*"),
+                regex("/prints.*"),
+                regex("/notes.*"),
+                regex("/discussions-board.*"),
+                regex("/discussions-team.*"),
+                regex("/logs.*")
+        );
+    }
+
     @Bean
     public SecurityConfiguration security() {
         return SecurityConfigurationBuilder.builder().scopeSeparator(",")
@@ -60,21 +75,6 @@ public class SwaggerConfig {
         authorizationScopes[0] = authorizationScope;
         return Arrays.asList(new SecurityReference("apiKey",
                 authorizationScopes));
-    }
-
-    private Predicate<String> mainPath() {
-
-        return or(
-                regex("/authenticate.*"),
-                regex("/file-handle.*"),
-                regex("/admin.*"),
-                regex("/performance-materiality.*"),
-                regex("/prints.*"),
-                regex("/notes.*"),
-                regex("/discussions-board.*"),
-                regex("/discussions-team.*"),
-                regex("/logs.*")
-        );
     }
 
     private ApiInfo apiInfo() {
