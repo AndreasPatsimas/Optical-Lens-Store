@@ -32,14 +32,48 @@ public class SwaggerConfig {
                 .apiInfo(apiInfo())
                 .select()
                 .paths(mainPath())
-                .build();
+                .build()
+                .securitySchemes(Arrays.asList(apiKey()))
+                .securityContexts(Arrays.asList(securityContext()));
+    }
+
+    @Bean
+    public SecurityConfiguration security() {
+        return SecurityConfigurationBuilder.builder().scopeSeparator(",")
+                .additionalQueryStringParams(null)
+                .useBasicAuthenticationWithAccessCodeGrant(false).build();
+    }
+
+    private ApiKey apiKey() {
+        return new ApiKey("apiKey", "Authorization", "header");
+    }
+
+    private SecurityContext securityContext() {
+        return SecurityContext.builder().securityReferences(defaultAuth())
+                .forPaths(PathSelectors.any()).build();
+    }
+
+    private List<SecurityReference> defaultAuth() {
+        AuthorizationScope authorizationScope = new AuthorizationScope(
+                "global", "accessEverything");
+        AuthorizationScope[] authorizationScopes = new AuthorizationScope[1];
+        authorizationScopes[0] = authorizationScope;
+        return Arrays.asList(new SecurityReference("apiKey",
+                authorizationScopes));
     }
 
     private Predicate<String> mainPath() {
 
         return or(
-                regex("/customers.*"),
-                regex("/orders.*")
+                regex("/authenticate.*"),
+                regex("/file-handle.*"),
+                regex("/admin.*"),
+                regex("/performance-materiality.*"),
+                regex("/prints.*"),
+                regex("/notes.*"),
+                regex("/discussions-board.*"),
+                regex("/discussions-team.*"),
+                regex("/logs.*")
         );
     }
 
