@@ -41,14 +41,7 @@ public class SwaggerConfig {
 
         return or(
                 regex("/authenticate.*"),
-                regex("/file-handle.*"),
-                regex("/admin.*"),
-                regex("/performance-materiality.*"),
-                regex("/prints.*"),
-                regex("/notes.*"),
-                regex("/discussions-board.*"),
-                regex("/discussions-team.*"),
-                regex("/logs.*")
+                regex("/customers.*")
         );
     }
 

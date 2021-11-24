@@ -89,7 +89,7 @@ CREATE TABLE `glasses_skeleton` (
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE `order` (
-  `id` int(11) NOT NULL,
+  `id` int(11) NOT NULL AUTO_INCREMENT,
   `order_date` date DEFAULT NULL,
   `delivery_date` date DEFAULT NULL,
   `total` double DEFAULT NULL,

@@ -5,7 +5,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.autoconfigure.EnableAutoConfiguration;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
-import org.springframework.context.annotation.Primary;
 import org.springframework.context.annotation.PropertySource;
 import org.springframework.core.env.Environment;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
@@ -22,8 +21,8 @@ import java.util.HashMap;
 @Configuration
 @PropertySource("classpath:application.properties")
 @EnableJpaRepositories(basePackages = "org.patsimas.optical_lens_store.repositories",
-        entityManagerFactoryRef = "entityManager",
-        transactionManagerRef= "transactionManager"
+        entityManagerFactoryRef = "opticalEntityManager",
+        transactionManagerRef= "opticalTransactionManager"
 )
 @EnableTransactionManagement
 @EnableAutoConfiguration
@@ -33,11 +32,10 @@ public class PersistenceJPA {
     private Environment env;
 
     @Bean
-    @Primary
-    public LocalContainerEntityManagerFactoryBean samEntityManager() {
+    public LocalContainerEntityManagerFactoryBean opticalEntityManager() {
         LocalContainerEntityManagerFactoryBean em
                 = new LocalContainerEntityManagerFactoryBean();
-        em.setDataSource(samDataSource());
+        em.setDataSource(opticalDataSource());
         em.setPackagesToScan(
                 "org.patsimas.optical_lens_store.domain");
 
@@ -55,8 +53,7 @@ public class PersistenceJPA {
     }
 
     @Bean
-    @Primary
-    public DataSource samDataSource() {
+    public DataSource opticalDataSource() {
 
         DriverManagerDataSource dataSource = new DriverManagerDataSource();
 
@@ -69,13 +66,12 @@ public class PersistenceJPA {
     }
 
     @Bean
-    @Primary
-    public PlatformTransactionManager samTransactionManager() {
+    public PlatformTransactionManager opticalTransactionManager() {
 
         JpaTransactionManager transactionManager
                 = new JpaTransactionManager();
         transactionManager.setEntityManagerFactory(
-                samEntityManager().getObject());
+                opticalEntityManager().getObject());
         return transactionManager;
     }
 }
