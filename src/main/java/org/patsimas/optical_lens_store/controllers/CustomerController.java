@@ -10,7 +10,9 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
+import org.springframework.http.ResponseEntity;
 import org.springframework.util.ObjectUtils;
 import org.springframework.web.bind.annotation.*;
 
@@ -53,5 +55,21 @@ public class CustomerController {
             pageable = PageRequest.of(page, pageSize);
 
         return customerService.advancedSearch(customerSearchRequestDto, pageable);
+    }
+
+    @PostMapping(consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)
+    ResponseEntity save(@RequestBody CustomerDto customerDto) {
+
+        log.info("Save Customer[{}]", customerDto);
+        customerService.save(customerDto);
+        return new ResponseEntity<>(HttpStatus.CREATED);
+    }
+
+    @DeleteMapping(value = "/{id}")
+    ResponseEntity delete(@PathVariable("id") Long id) {
+
+        log.info("Delete customer[id:{}]", id);
+        customerService.delete(id);
+        return new ResponseEntity<>(HttpStatus.NO_CONTENT);
     }
 }

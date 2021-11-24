@@ -36,4 +36,7 @@ public class Customer {
 
     @Column(name = "last_update_date")
     private Instant lastUpdateDate;
+
+    @Column(name = "active")
+    private Short active;
 }

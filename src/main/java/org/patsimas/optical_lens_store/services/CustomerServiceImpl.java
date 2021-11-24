@@ -4,6 +4,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.patsimas.optical_lens_store.domain.Customer;
 import org.patsimas.optical_lens_store.dto.CustomerDto;
 import org.patsimas.optical_lens_store.dto.CustomerSearchRequestDto;
+import org.patsimas.optical_lens_store.enums.ActiveStatus;
+import org.patsimas.optical_lens_store.exceptions.ResourceAlreadyExistsException;
 import org.patsimas.optical_lens_store.repositories.CustomerRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.convert.ConversionService;
@@ -17,9 +19,11 @@ import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import javax.persistence.TypedQuery;
 import javax.persistence.criteria.*;
+import java.time.Instant;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
+import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static org.patsimas.optical_lens_store.utils.PageUtils.buildPagedResults;
@@ -78,12 +82,53 @@ public class CustomerServiceImpl implements CustomerService {
 
         log.info("Save Customer[{}] process begins", customerDto);
 
-        log.info("Save Customer process end");
+        if (!ObjectUtils.isEmpty(customerDto)) {
+
+
+            Optional<Customer> optionalCustomer = customerRepository
+                    .findByEmailAndActive(customerDto.getEmail(), ActiveStatus.ACTIVE.code());
+            optionalCustomer.ifPresent(customer -> {
+
+                if (!customer.getId().equals(customerDto.getId()))
+                    throw new ResourceAlreadyExistsException("Υπάρχει ήδη πελάτης με το email: " +
+                            customerDto.getEmail());
+            });
+            Instant now = Instant.now();
+
+            if (ObjectUtils.isEmpty(customerDto.getId())) {
+                customerDto.setRegisterDate(now);
+                Customer customer = conversionService.convert(customerDto, Customer.class);
+                if (!ObjectUtils.isEmpty(customer))
+                    customerRepository.save(customer);
+            }
+            else {
+                Optional<Customer> customerOptional = customerRepository.findById(customerDto.getId());
+                customerOptional.ifPresent(customer -> {
+                    customer.setFirstName(customerDto.getFirstName());
+                    customer.setLastName(customerDto.getLastName());
+                    customer.setEmail(customerDto.getEmail());
+                    customer.setPhone(customerDto.getPhone());
+                    customer.setLastUpdateDate(now);
+                    customerRepository.save(customer);
+                });
+            }
+
+            log.info("Save Customer process end");
+        }
     }
 
     @Override
     public void delete(Long id) {
 
+        log.info("Delete customer[id:{}] process begins", id);
+
+        Optional<Customer> customerOptional = customerRepository.findById(id);
+        customerOptional.ifPresent(customer -> {
+            customer.setActive(ActiveStatus.INACTIVE.code());
+            customerRepository.save(customer);
+        });
+
+        log.info("Delete customer[id:{}] process end", id);
     }
 
     private List<Predicate> buildPredicates(CustomerSearchRequestDto searchRequestDto, CriteriaBuilder cBuilder,
@@ -92,6 +137,8 @@ public class CustomerServiceImpl implements CustomerService {
         List<Predicate> predicates = new ArrayList<>();
 
         //Adding predicates for not null request fields
+
+        predicates.add(cBuilder.equal(customerRoot.get("active"), ActiveStatus.ACTIVE.code()));
 
         if (!ObjectUtils.isEmpty(searchRequestDto.getFirstName()))
             predicates.add(cBuilder.like(customerRoot.get("firstName"), searchRequestDto.getFirstName() + '%'));

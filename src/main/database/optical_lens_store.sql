@@ -16,6 +16,7 @@ CREATE TABLE `customers` (
   `phone` varchar(20) COLLATE utf8_bin DEFAULT NULL,
   `register_date` datetime NOT NULL,
   `last_update_date` datetime DEFAULT NULL,
+  `active` smallint(2) NOT NULL,
   PRIMARY KEY (`id`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
