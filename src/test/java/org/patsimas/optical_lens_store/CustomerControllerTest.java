@@ -34,7 +34,6 @@ public class CustomerControllerTest extends BasicWiremockTest {
 
         this.mockMvc.perform(RestDocumentationRequestBuilders
                 .post("/customers/advanced-search?page=0&pageSize=10")
-//                .header(HEADER_KEY, HEADER_VALUE)
                 .content(asJsonString(searchRequestDto)).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isOk())
@@ -54,7 +53,6 @@ public class CustomerControllerTest extends BasicWiremockTest {
 
         this.mockMvc.perform(RestDocumentationRequestBuilders
                 .post("/customers")
-//                .header(HEADER_KEY, HEADER_VALUE)
                 .content(asJsonString(customerDto)).contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isCreated());
@@ -62,10 +60,7 @@ public class CustomerControllerTest extends BasicWiremockTest {
 
     @Test
     public void b_delete() throws Exception {
-        this.mockMvc.perform(delete("/customers/{id}",
-                1L)
-//                .header(HEADER_KEY, HEADER_VALUE)
-        )
+        this.mockMvc.perform(delete("/customers/{id}", 1L))
                 .andDo(print())
                 .andExpect(status().isNoContent());
     }
