@@ -2,8 +2,8 @@ package org.patsimas.optical_lens_store.controllers;
 
 import io.swagger.annotations.Api;
 import lombok.extern.slf4j.Slf4j;
-import org.patsimas.optical_lens_store.dto.CustomerDto;
-import org.patsimas.optical_lens_store.dto.CustomerSearchRequestDto;
+import org.patsimas.optical_lens_store.dto.customers.CustomerDto;
+import org.patsimas.optical_lens_store.dto.customers.CustomerSearchRequestDto;
 import org.patsimas.optical_lens_store.services.CustomerService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;

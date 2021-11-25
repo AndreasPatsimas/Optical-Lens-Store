@@ -17,7 +17,8 @@ CREATE TABLE `customers` (
   `register_date` datetime NOT NULL,
   `last_update_date` datetime DEFAULT NULL,
   `active` smallint(2) NOT NULL,
-  PRIMARY KEY (`id`)
+  PRIMARY KEY (`id`),
+  UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE `contact_lens` (

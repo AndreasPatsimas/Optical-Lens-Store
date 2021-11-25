@@ -1,4 +1,4 @@
-package org.patsimas.optical_lens_store.dto;
+package org.patsimas.optical_lens_store.dto.customers;
 
 import lombok.*;
 

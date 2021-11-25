@@ -2,8 +2,8 @@ package org.patsimas.optical_lens_store.services;
 
 import lombok.extern.slf4j.Slf4j;
 import org.patsimas.optical_lens_store.domain.Customer;
-import org.patsimas.optical_lens_store.dto.CustomerDto;
-import org.patsimas.optical_lens_store.dto.CustomerSearchRequestDto;
+import org.patsimas.optical_lens_store.dto.customers.CustomerDto;
+import org.patsimas.optical_lens_store.dto.customers.CustomerSearchRequestDto;
 import org.patsimas.optical_lens_store.enums.ActiveStatus;
 import org.patsimas.optical_lens_store.exceptions.ResourceAlreadyExistsException;
 import org.patsimas.optical_lens_store.repositories.CustomerRepository;

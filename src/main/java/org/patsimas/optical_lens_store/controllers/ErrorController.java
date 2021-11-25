@@ -43,4 +43,16 @@ public class ErrorController {
 
         return new ResponseEntity<>(errorResponse, HttpStatus.NOT_ACCEPTABLE);
     }
+
+    @ExceptionHandler(AuthorizationFailedException.class)
+    public ResponseEntity<ErrorResponse> authorizationFailedExceptionHandler(Exception ex) {
+
+        ErrorResponse errorResponse = ErrorResponse.builder()
+                .errorCode(HttpStatus.FORBIDDEN.value())
+                .status(HttpStatus.FORBIDDEN)
+                .message(ex.getMessage())
+                .build();
+
+        return new ResponseEntity<>(errorResponse, HttpStatus.FORBIDDEN);
+    }
 }
