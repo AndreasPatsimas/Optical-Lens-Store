@@ -1,6 +1,7 @@
 package org.patsimas.optical_lens_store.domain;
 
 import lombok.*;
+import org.patsimas.optical_lens_store.domain.contact_lens.ContactCard;
 import org.patsimas.optical_lens_store.domain.glasses.Glass;
 
 import javax.persistence.*;
@@ -10,8 +11,8 @@ import java.time.LocalDate;
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = {"glass", "contactLen"})
-@ToString(exclude = {"glass", "contactLen"})
+@EqualsAndHashCode(exclude = {"glass", "contactCard"})
+@ToString(exclude = {"glass", "contactCard"})
 @Entity
 @Table(name = "orders")
 public class Order {
@@ -43,6 +44,6 @@ public class Order {
 
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH})
-    @JoinColumn(name = "contact_lens_id")
-    private ContactLen contactLen;
+    @JoinColumn(name = "contact_cards_id")
+    private ContactCard contactCard;
 }

@@ -21,6 +21,17 @@ CREATE TABLE `customers` (
   UNIQUE KEY `email_UNIQUE` (`email`)
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
+CREATE TABLE `contact_cards` (
+  `id` int(11) NOT NULL AUTO_INCREMENT,
+  `comments` varchar(500) COLLATE utf8_bin DEFAULT NULL,
+  `register_date` datetime NOT NULL,
+  `last_update_date` datetime DEFAULT NULL,
+  `customer_id` int(11) NOT NULL,
+  PRIMARY KEY (`id`),
+  KEY `fk_customer_idx` (`customer_id`),
+  CONSTRAINT `fk_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 CREATE TABLE `contact_lens` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `type` smallint(2) NOT NULL,
@@ -32,12 +43,10 @@ CREATE TABLE `contact_lens` (
   `mk1` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   `mk2` varchar(45) COLLATE utf8_bin DEFAULT NULL,
   `contact_len_type` varchar(85) COLLATE utf8_bin DEFAULT NULL,
-  `register_date` datetime NOT NULL,
-  `last_update_date` datetime DEFAULT NULL,
-  `customer_id` int(11) NOT NULL,
+  `contact_cards_id` int(11) NOT NULL,
   PRIMARY KEY (`id`),
-  KEY `fk_customer_idx` (`customer_id`),
-  CONSTRAINT `fk_customer` FOREIGN KEY (`customer_id`) REFERENCES `customers` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
+  KEY `fk_contact_cards_idx` (`contact_cards_id`),
+  CONSTRAINT `fk_contact_cards` FOREIGN KEY (`contact_cards_id`) REFERENCES `contact_cards` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 
 CREATE TABLE `glasses` (
@@ -104,11 +113,11 @@ CREATE TABLE `orders` (
   `payment_in_advance` double DEFAULT NULL,
   `balance` double DEFAULT NULL,
   `glasses_id` int(11) DEFAULT NULL,
-  `contact_lens_id` int(11) DEFAULT NULL,
+  `contact_cards_id` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_glasses3_idx` (`glasses_id`),
-  KEY `fk_contact_lens_idx` (`contact_lens_id`),
-  CONSTRAINT `fk_contact_lens` FOREIGN KEY (`contact_lens_id`) REFERENCES `contact_lens` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
+  KEY `fk_contact_cards_idx` (`contact_cards_id`),
+  CONSTRAINT `fk_contact_cards1` FOREIGN KEY (`contact_cards_id`) REFERENCES `contact_cards` (`id`) ON DELETE CASCADE ON UPDATE CASCADE,
   CONSTRAINT `fk_glasses3` FOREIGN KEY (`glasses_id`) REFERENCES `glasses` (`id`) ON DELETE CASCADE ON UPDATE CASCADE
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
 

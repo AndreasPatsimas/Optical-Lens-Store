@@ -1,17 +1,15 @@
-package org.patsimas.optical_lens_store.domain;
+package org.patsimas.optical_lens_store.domain.contact_lens;
 
 import lombok.*;
 
 import javax.persistence.*;
-import java.time.Instant;
-import java.util.Set;
 
 @Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@EqualsAndHashCode(exclude = {"customer", "orders"})
-@ToString(exclude = {"customer", "orders"})
+@EqualsAndHashCode(exclude = {"contactCard"})
+@ToString(exclude = {"contactCard"})
 @Entity
 @Table(name = "contact_lens")
 public class ContactLen {
@@ -48,17 +46,8 @@ public class ContactLen {
     @Column(name = "contact_len_type")
     private String contactLenType;
 
-    @Column(name = "register_date")
-    private Instant registerDate;
-
-    @Column(name = "last_update_date")
-    private Instant lastUpdateDate;
-
     @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH})
-    @JoinColumn(name = "customer_id")
-    private Customer customer;
-
-    @OneToMany(mappedBy = "contactLen", fetch= FetchType.LAZY, cascade = CascadeType.ALL)
-    private Set<Order> orders;
+    @JoinColumn(name = "contact_cards_id")
+    private ContactCard contactCard;
 }
