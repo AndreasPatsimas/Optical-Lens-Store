@@ -1,4 +1,4 @@
-package org.patsimas.optical_lens_store.converters;
+package org.patsimas.optical_lens_store.converters.customers;
 
 import org.patsimas.optical_lens_store.domain.Customer;
 import org.patsimas.optical_lens_store.dto.customers.CustomerDto;

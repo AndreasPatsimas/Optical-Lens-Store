@@ -5,8 +5,8 @@ import lombok.Getter;
 @Getter
 public enum GlassLenType {
 
-    LEFT(((short) 0)),
-    RIGHT(((short) 1));
+    RIGHT(((short) 0)),
+    LEFT(((short) 1));
 
     private final short code;
 
