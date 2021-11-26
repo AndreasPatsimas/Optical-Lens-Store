@@ -41,6 +41,7 @@ public class SwaggerConfig {
 
         return or(
                 regex("/authenticate.*"),
+                regex("/glasses.*"),
                 regex("/customers.*")
         );
     }

@@ -31,7 +31,7 @@ public class GlassLen {
     @Column(name = "diameter")
     private String diameter;
 
-    @ManyToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE,
+    @OneToOne(fetch = FetchType.LAZY, cascade = {CascadeType.PERSIST, CascadeType.MERGE,
             CascadeType.REFRESH})
     @JoinColumn(name = "glasses_id")
     private Glass glass;

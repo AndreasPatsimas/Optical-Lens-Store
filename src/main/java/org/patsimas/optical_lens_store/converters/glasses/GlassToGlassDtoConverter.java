@@ -1,5 +1,6 @@
 package org.patsimas.optical_lens_store.converters.glasses;
 
+import org.patsimas.optical_lens_store.converters.orders.OrderToOrderDtoConverter;
 import org.patsimas.optical_lens_store.domain.glasses.Glass;
 import org.patsimas.optical_lens_store.domain.glasses.GlassCategory;
 import org.patsimas.optical_lens_store.domain.glasses.GlassLen;
@@ -21,7 +22,7 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 @Component
-public class GlassToGlassDtoConverter implements Converter<Glass, GlassDto> {
+public class GlassToGlassDtoConverter extends OrderToOrderDtoConverter implements Converter<Glass, GlassDto> {
 
     @Override
     public GlassDto convert(Glass glass) {
@@ -30,6 +31,10 @@ public class GlassToGlassDtoConverter implements Converter<Glass, GlassDto> {
                 .comments(glass.getComments())
                 .registerDate(glass.getRegisterDate())
                 .lastUpdateDate(glass.getLastUpdateDate())
+                .glassCategories(buildGlassCategories(glass.getGlassCategories()))
+                .glassLens(buildGlassLens(glass.getGlassLens()))
+                .glassSkeleton(buildGlassSkeleton(glass.getGlassSkeleton()))
+                .orders(buildOrders(glass.getOrders()))
                 .build();
     }
 
@@ -75,14 +80,14 @@ public class GlassToGlassDtoConverter implements Converter<Glass, GlassDto> {
 
     private GlassSkeletonDto buildGlassSkeleton(GlassSkeleton glassSkeleton) {
 
-        return GlassSkeletonDto.builder()
+        return !ObjectUtils.isEmpty(glassSkeleton) ? GlassSkeletonDto.builder()
                 .id(glassSkeleton.getId())
                 .brand(glassSkeleton.getBrand())
                 .color(glassSkeleton.getColor())
                 .model(glassSkeleton.getModel())
                 .nose(glassSkeleton.getNose())
                 .size(glassSkeleton.getSize())
-                .build();
+                .build() : new GlassSkeletonDto();
     }
 
 }

@@ -26,15 +26,6 @@ public class CustomerController {
     @Autowired
     private CustomerService customerService;
 
-    /**
-     * Advanced Search Customers
-     *
-     * @param page          the page number
-     * @param pageSize      records per page
-     * @param sortBy        the sorting field
-     * @param sortDirection the sorting direction
-     * @return Customers as paged results
-     */
     @PostMapping(value = "/advanced-search",
             produces = MediaType.APPLICATION_JSON_UTF8_VALUE,
             consumes = MediaType.APPLICATION_JSON_UTF8_VALUE)

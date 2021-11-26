@@ -7,7 +7,7 @@ public enum  GlassCategoryType {
 
     SMALL(((short) 0)),
     MEDIUM(((short) 1)),
-    LARGE(((short) 1));
+    LARGE(((short) 2));
 
     private final short code;
 

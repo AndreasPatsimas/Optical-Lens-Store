@@ -97,6 +97,7 @@ public class CustomerServiceImpl implements CustomerService {
 
             if (ObjectUtils.isEmpty(customerDto.getId())) {
                 customerDto.setRegisterDate(now);
+                customerDto.setLastUpdateDate(now);
                 Customer customer = conversionService.convert(customerDto, Customer.class);
                 if (!ObjectUtils.isEmpty(customer))
                     customerRepository.save(customer);
