@@ -24,4 +24,7 @@ public class User {
 
     @Column(name = "active")
     private short active;
+
+    @Column(name = "email")
+    private String email;
 }

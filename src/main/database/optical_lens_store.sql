@@ -4,6 +4,7 @@ CREATE TABLE `users` (
   `password` varchar(100) NOT NULL,
   `active` tinyint(1) NOT NULL,
   `time_insert` datetime NOT NULL,
+  `email` varchar(45) COLLATE utf8_bin NOT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `username_UNIQUE` (`username`)
 ) ENGINE=InnoDB AUTO_INCREMENT=64 DEFAULT CHARSET=utf8;
