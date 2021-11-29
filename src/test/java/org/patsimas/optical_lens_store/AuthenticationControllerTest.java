@@ -81,7 +81,7 @@ public class AuthenticationControllerTest extends BasicWiremockTest {
 
         ForgotPasswordRequest forgotPasswordRequest = ForgotPasswordRequest.builder()
                 .username(USERNAME)
-                .email("agathoula95st@gmail.com")
+                .email("apatsimas@solcrowe.gr")
                 .build();
 
         this.mockMvc.perform(
